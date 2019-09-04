@@ -159,10 +159,10 @@ ACTIVATION_TIMEOUT_SECONDS = 60*60*24
 # Need a permission of access from low level of safety app (in Gmail Account settings)
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'tarou.xxx.0129@gmail.com'
-EMAIL_HOST_PASSWORD = 'manato129'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'tarou.xxx.0129@gmail.com'
+DEFAULT_FROM_EMAIL = ''
 
 
 # Rest framework settings
