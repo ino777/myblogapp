@@ -1,0 +1,15 @@
+<!-- search form -->
+<div id="search-container">
+        <div class="row">
+            <div class="col text-center">
+                <form action="{% url 'blogs:result' %}" method="GET" class="search-form">
+                    <input type="text" class="search-form-text" name="q" placeholder="author, title" autocomplete="false"><!--
+                    --><button type="button" class="search-form-button">
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% load static %}
+<script type="text/javascript" src="{% static 'blogs/js/searchForm.js' %}"></script>

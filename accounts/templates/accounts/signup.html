@@ -1,0 +1,40 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+
+<h1> Here is Signup </h1>
+
+<div class="container">
+    <div id="sign-up-form-container">
+        <form method="post">
+            {% csrf_token %}
+            <div id="non-field-errors">
+                {{ form.non_field_errors }}
+            </div>
+            {% for field in form %}
+            <div class="row">
+                <div class="field col-12 mt-4">
+                    {{ field.label }}
+                </div>
+                <div class="field col-12 mt-3">
+                    {{ field }}
+                </div>
+                <div class="field col-12">
+                    <div class="field_help_text">{{ field.help_text }}</div>
+                </div>
+                <div class="field col-12 mt-1">
+                    {% if field.errors %}
+                    <div class="field_error_text alert alert-danger" role="alert">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="row">
+                <div class="col-10 my-5"><button type="submit" class="btn btn-primary btn-lg w-50">Send</button></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'blogs/base_user_page.html' %}
+
+{% block main_content %}
+
+    <h1> Here is MyBlogs {{ user.username }} </h1>
+
+    <div class="container">
+        <div class="row align-items-center no-gutters">
+            {% for post in my_post_list %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mh-100">
+                <a class="thumbnail" href="{% url 'blogs:detail' pk=post.pk %}">
+                    <img class="img-fluid rounded img-thumbnail" src="{{ post.image_thumbnail.url }}">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

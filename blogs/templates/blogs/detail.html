@@ -1,0 +1,177 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+<h1>Here is ID {{ post.pk }} detail</h1>
+
+<!-- {% if post.author.pk == request.user.pk or request.user.is_superuser %}
+    <a href="{% url 'blogs:edit' post.pk %}"><button class="btn btn-primary">Edit</button></a>
+    <a href="{% url 'blogs:delete' post.pk %}"><button class="btn btn-primary">Delete</button></a>
+    {% endif %} -->
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-9 my-3">
+            <label hidden>Author:</label>
+            <div id="author-container">
+                <a href="{% url 'blogs:user_page' post.author.pk %}">
+                    <div id="author-icon">
+                        <img src="{{ post.author.icon_image.url }}" id="author-icon-image">
+                    </div>
+                </a>
+                <div id="author-name">
+                    <a href="{% url 'blogs:user_page' post.author.pk %}">{{ post.author.username }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div style="float:right">
+                <label class="text-muted">Updated:</label>
+                {{ post.published_date }}
+            </div>
+        </div>
+        {% if post.image %}
+        <div class="col-9 my-3">
+            <label hidden>Image:</label>
+            <a href="{{ post.image.url }}" target="blank"><img class="img-responsive mw-100" src="{{ post.image.url }}"></a>
+        </div>
+        {% endif %}
+        <div class="col-9 mb-2" id="post_eval">
+            <div id="posteval-container" class="row">
+                <div class="posteval col" id="good-container">
+                    <button class="btn" id="good-button">Good</button>
+                    <div id="good-count" class="text-center"></div>
+                </div>
+                <div class="posteval col" id="bad-container">
+                    <button class="btn" id="bad-button">Bad</button>
+                    <div id="bad-count" class="text-center"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 my-3">
+            <label>Title:</label>
+            {{ post.title }}
+        </div>
+        <div class="col-9 my-3">
+            <label>Description:</label>
+            {{ post.text | linebreaksbr }}
+        </div>
+    </div>
+
+</div>
+
+{% csrf_token %}
+<script>
+    // Need {% csrf_token %}
+
+    $(function () {
+        var good_button = $('#good-button');
+        var bad_button = $('#bad-button');
+        var good_field = $('#good-count');
+        var bad_field = $('#bad-count');
+        var good_count = 0;
+        var bad_count = 0;
+
+        const good_selected = 'btn-primary';
+        const bad_selected = 'btn-danger';
+
+        // GET method
+        $.ajax({
+            url: '{% url "apis:posteval-list" %}',
+            method: 'GET',
+            data: {
+                'post': '{{ post.pk }}',
+                'good': true,
+                'bad': false,
+            }
+        })
+            .done((response) => {
+                good_count = Object.keys(response).length;
+                good_field.html(good_count);
+                if ('{{ post_eval.good }}' == 'True') {
+                    good_button.addClass(good_selected);
+                }
+            })
+            .fail((response) => {
+                console.log('GET method fail!');
+                good_count = 0;
+            })
+
+        $.ajax({
+            url: '{% url "apis:posteval-list" %}',
+            method: 'GET',
+            data: {
+                'post': '{{ post.pk }}',
+                'good': false,
+                'bad': true
+            }
+        })
+            .done((response) => {
+                bad_count = Object.keys(response).length;
+                bad_field.html(bad_count);
+                if ('{{ post_eval.bad }}' == 'True') {
+                    bad_button.addClass(bad_selected);
+                }
+            })
+            .fail((response) => {
+                console.log('GET method fail!');
+                bad_count = 0;
+            })
+
+
+        '{% if user.is_authenticated %}'
+        // PUT Method
+        var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+
+        good_button.on('click', function () {
+            if ($(this).hasClass(good_selected)) {
+                putPostEval(false, false);
+                good_field.html(--good_count);
+                $(this).removeClass(good_selected);
+            } else {
+                putPostEval(true, false);
+                if (bad_button.hasClass(bad_selected)) {
+                    bad_field.html(--bad_count);
+                    bad_button.removeClass(bad_selected);
+                }
+                good_field.html(++good_count);
+                $(this).addClass(good_selected);
+            }
+        });
+
+        bad_button.on('click', function () {
+            if ($(this).hasClass(bad_selected)) {
+                putPostEval(false, false);
+                bad_field.html(--bad_count);
+                $(this).removeClass(bad_selected);
+            } else {
+                putPostEval(false, true);
+                if (good_button.hasClass(good_selected)) {
+                    good_field.html(--good_count);
+                    good_button.removeClass((good_selected));
+                }
+                bad_field.html(++bad_count);
+                $(this).addClass(bad_selected);
+            }
+        });
+
+        var putPostEval = function (good, bad) {
+            $.ajax({
+                url: '{% url "apis:posteval-detail" post_eval.pk %}',
+                method: 'PUT',
+                data: {
+                    'post': '{{ post.pk }}',
+                    'user': '{{ user.pk }}',
+                    'good': good,
+                    'bad': bad,
+                },
+                headers: { "X-CSRFToken": $crf_token }, // csrf_token
+            })
+                .fail((response) => {
+                    console.log('PUT fail!');
+                })
+        }
+        '{% endif %}'
+
+    });
+</script>
+{% endblock %}

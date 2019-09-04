@@ -1,0 +1,71 @@
+.errorlist{
+    margin: 0;
+    padding: 0;
+}
+
+#non-field-errors li{
+    list-style-type: none;
+}
+
+#non-field-errors {
+    width: 400px;
+    height: auto;
+    margin: 0 auto;
+    text-align: start;
+}
+
+.field_help_text{
+    font-size: 70%;
+}
+
+.field_help_text ul{
+    padding: 0;
+}
+
+.field_error_text li{
+    font-size: 80%;
+    list-style-type: none;
+    padding: 0;
+}
+
+.field_error_text ul{
+    padding: 0;
+    margin: 0;
+}
+
+.field_error_text{
+    width: 400px;
+    height: auto;
+    text-align: start;
+}
+
+/* User form style */
+#id_username{
+    width: 300px;
+}
+#id_email{
+    width: 300px;
+}
+#id_password{
+    width: 300px;
+}
+#id_password1{
+    width: 300px;
+}
+
+/* Sign Up form */
+
+#sign-up-form-container{
+    width:50%;
+    float: left;
+}
+
+/* Login form */
+
+#login-form-container{
+    width: 400px;
+    height: 320px;
+    margin: 0 auto;
+    border: 2px #8685859e solid;
+    border-radius: 10px;
+}

@@ -1,0 +1,11 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+    <h1>Here is the confirm page of ID:{{ post.pk }} blog</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-primary" type="submit" name="delete">Delete</button>
+    </form>
+
+{% endblock%}

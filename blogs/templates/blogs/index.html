@@ -1,0 +1,34 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+
+<h1 class="headline">Here is index!!!</h1>
+
+<!-- Content -->
+<div class="container clearfix">
+    <div class="row align-items-center contents">
+        {% for post in latest_post_list %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mh-100 thumbnail-box">
+            <a class="thumbnail" href="{% url 'blogs:detail' post.pk %}">
+                <img class="img-fluid" src="{{ post.image_thumbnail.url }}" alt="{{ post.title }}">
+                <div id="thumbnail-title" class="text-center">
+                    {{ post.title }}
+                </div>
+            </a>
+            <div id="thumbnail-author" class="text-center">
+                <a href="{%url 'blogs:user_page' post.author.pk %}">
+                    {{ post.author.username }}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="loading text-center"></div>
+
+<!-- pagination -->
+
+
+</script>
+
+{% endblock%}

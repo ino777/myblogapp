@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}">
+    <!-- jQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{% static 'blogs/js/js/jquery.bottom-1.0.js' %}"></script>
+</head>
+
+<body>
+    <h1>Here is Login form </h1>
+
+    <div class="text-center my-5">
+        <a href="{% url 'blogs:index' %}" style="text-decoration-line: none"> 
+            <span style="color: black; font-size: 200%">
+                TOP
+            </span>
+
+        </a>
+    </div>
+
+    <div class="container">
+        {% if form.non_field_errors %}
+        <div id="non-field-errors" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+
+        <div id="login-form-container">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="row justify-content-center">
+                    <div class="field col-12 mt-4 text-center">
+                        {{ field.label }}
+                    </div>
+                    <div class="field col-12 mt-3 text-center">
+                        {{ field }}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="row">
+                    <div class="col-10 mt-5 mx-auto">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <div>
+                                Sign in
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Bootstrap4 -->
+    <script src="{% static 'blogs/js/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

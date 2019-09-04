@@ -1,0 +1,75 @@
+{% extends 'blogs/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div id="userpage-header">
+        <div id="head-container" class="">
+            <div class="" id="user-container">
+                <div class="col-2">
+
+                </div>
+                <div class="" id="user-icon">
+                    <img src="{{ dest_user.icon_image.url }}" id="user-icon-image">
+                </div>
+                <div class="" id="user-name">
+                    <span>{{ dest_user.username }}</span>
+                </div>
+            </div>
+        </div>
+        <div id="tabs-container" class="row no-gutters">
+            <div class="tab-item col-2" id="tab-mypage">
+                {% url 'blogs:user_page' dest_user.pk as user_page_url %}
+                {% if request.path_info == user_page_url %}
+                <a class="disabled">
+                    <div class="background" id="tab-current">Home</div>
+                </a>
+                {% else %}
+                <a href="{{ user_page_url }}" class="tab-link text-muted">
+                    <div class="background">Home</div>
+                </a>
+                {% endif %}
+            </div>
+            <div class="tab-item col-2" id="tab-myposts">
+                {% url 'blogs:user_posts' dest_user.pk as user_posts_url %}
+                {% if request.path_info == user_posts_url %}
+                <a class="disabled">
+                    <div class="background" id="tab-current">Posts</div>
+                </a>
+                {% else %}
+                <a href="{{ user_posts_url }}" class="tab-link text-muted">
+                    <div class="background">Posts</div>
+                </a>
+                {% endif %}
+            </div>
+            <div class="tab-item col-2" id="tab-settings">
+                {% url 'blogs:profile' dest_user.pk as profile_url %}
+                {% if request.path_info == profile_url %}
+                <a class="disabled">
+                    <div class="background" id="tab-current">Profile</div>
+                </a>
+                {% else %}
+                <a href="{{ profile_url }}" class="tab-link text-muted">
+                    <div class="background">Profile</div>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="userpage-main-content">
+        {% block main_content %}
+        {% endblock %}
+    </div>
+
+</div>
+<script>
+    $(function () {
+        $(".tab-link").hover(function () {
+            $(this).removeClass("text-muted");
+        }, function () {
+            $(this).addClass("text-muted");
+        })
+    });
+</script>
+{% endblock %}
