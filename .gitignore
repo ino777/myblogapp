@@ -2,3 +2,4 @@
 logging.log*
 *.jpg
 *.png
+db.sqlite3
