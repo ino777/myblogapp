@@ -5,3 +5,4 @@ logging.log*
 db.sqlite3
 */__pycache_/
 */migrations/
+*.pyc
