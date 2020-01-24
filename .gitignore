@@ -1,8 +1,10 @@
 .vscode/
+*.pyc
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
 logging.log*
 *.jpg
 *.png
-*.pyc
-pycache/
 media
 db.sqlite3
