@@ -3,3 +3,5 @@ logging.log*
 *.jpg
 *.png
 db.sqlite3
+*/__pycache_/
+*/migrations/
