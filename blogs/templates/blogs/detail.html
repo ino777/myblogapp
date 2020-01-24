@@ -1,5 +1,5 @@
 {% extends 'blogs/base.html' %}
-
+{% load static %}
 {% block content %}
 <h1>Here is ID {{ post.pk }} detail</h1>
 
@@ -35,8 +35,15 @@
             <a href="{{ post.image.url }}" target="blank"><img class="img-responsive mw-100" src="{{ post.image.url }}"></a>
         </div>
         {% endif %}
-        <div class="col-9 mb-2" id="post_eval">
-            <div id="posteval-container" class="row">
+
+        <div class="col-7 mb-2 clearfix" id="hit">
+            <div class="float-right">
+                <label class="text-muted">Views:</label>
+                <span id="hit-count">{{ post_hit | length}}</span>
+            </div>
+        </div>
+        <div class="col-3 mb-2" id="post_eval">
+            <div id="posteval-container" class="row float-right">
                 <div class="posteval col" id="good-container">
                     <button class="btn" id="good-button">Good</button>
                     <div id="good-count" class="text-center"></div>
@@ -47,6 +54,8 @@
                 </div>
             </div>
         </div>
+        <div class="col-2"></div>
+
         <div class="col-9 my-3">
             <label>Title:</label>
             {{ post.title }}
@@ -60,7 +69,40 @@
 </div>
 
 {% csrf_token %}
+
 <script>
+    // postHit
+    // Need {% csrf_token %}
+
+    $(function(){
+        var hit = '{{ post_hit | length }}'
+        $('#hit-count').html(hit);
+
+        // POST method
+        var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+
+        setTimeout(() => {
+            $.ajax({
+                url: '{% url "apis:posthit-list" %}',
+                method: 'POST',
+                data: {
+                    'post': '{{ post.pk }}',
+                    'user': '{{ user.pk }}',
+                    'hit': true
+                },
+                headers: { "X-CSRFToken": $crf_token }, // csrf_token
+            })
+                .fail((response) => {
+                    console.log('PostHit POST fail!');
+                })
+        }, 10000) // 10 sec
+    })
+
+</script>
+
+
+<script>
+    // postEval
     // Need {% csrf_token %}
 
     $(function () {
@@ -164,7 +206,7 @@
                     'good': good,
                     'bad': bad,
                 },
-                headers: { "X-CSRFToken": $crf_token }, // csrf_token
+                headers: { 'X-CSRFToken': $crf_token }, // csrf_token
             })
                 .fail((response) => {
                     console.log('PUT fail!');

@@ -34,6 +34,11 @@ class Post(models.Model):
         self.published_date = timezone.now()
         self.save()
 
+    def create(self, author):
+        """ Create post """
+        self.author = author
+        self.publish()
+
     def was_published_recently(self):
         """ Whether the post was published within 1 day """
         now = timezone.now()
@@ -78,7 +83,7 @@ class UserFavorites(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
 
 
-class HitPost(models.Model):
+class PostHit(models.Model):
     """ Post hit model """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

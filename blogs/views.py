@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.db.models import Q
 
 
-from .models import Post, PostEval
+from .models import Post, PostEval, PostHit
 from .forms import PostForm
 from .logging_config import _config
 
@@ -128,7 +128,8 @@ class PostDetailView(generic.DetailView):
             return context
         try:
             context['post_eval'] = post.posteval_set.get(user=self.request.user)
-        except PostEval.DoesNotExist:
+            context['post_hit'] = post.posthit_set.filter(post=post, hit=True)
+        except PostEval.DoesNotExist or HitPost.DoesNotExist:
             context['post_eval'] = post.posteval_set.create(user=self.request.user)
         return context
 

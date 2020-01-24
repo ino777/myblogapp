@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='HitPost',
+            name='PostHit',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
@@ -88,12 +88,12 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.AddField(
-            model_name='hitpost',
+            model_name='posthit',
             name='post',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blogs.Post'),
         ),
         migrations.AddField(
-            model_name='hitpost',
+            model_name='posthit',
             name='user',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),

@@ -3,13 +3,14 @@ from django.urls import path, include
 from rest_framework import routers
 
 
-from .views import PostAPIView, PostEvalAPIView
+from .views import PostAPIView, PostEvalAPIView, PostHitAPIView
 
 
 router = routers.DefaultRouter()
 
 router.register(r'posts', PostAPIView)
 router.register(r'post_evals', PostEvalAPIView)
+router.register(r'post_hits', PostHitAPIView)
 
 
 app_name = 'apis'

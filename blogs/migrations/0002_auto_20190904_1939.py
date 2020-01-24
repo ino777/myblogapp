@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='hitpost',
+            model_name='posthit',
             name='hit',
             field=models.BooleanField(default=False),
         ),
