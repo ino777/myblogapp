@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+<body id="wrapper">
 
     <!-- navigator -->
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
@@ -80,21 +80,7 @@
         <!-- </header> -->
     </nav>
 
-    <!-- message framework -->
-    <div id="messages-container">
-        {% if messages %}
-        <ul class="messagelist">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }} alert-dismissible" {% endif %} role="alert">
-                <button type="button" class="close" data-dismiss="alert">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <strong>{{ message }}</strong>
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    </div>
+
 
 
     <!-- sidebar -->
@@ -108,7 +94,7 @@
     </div>
 
     <!-- footer -->
-    <!-- <div id="footer">
+    <div id="footer">
         <footer class="footer mt-auto py-3">
             {%block footer%}
             <div class="container">
@@ -116,7 +102,23 @@
             </div>
             {% endblock %}
         </footer>
-    </div> -->
+    </div>
+
+    <!-- message framework -->
+    <div id="messages-container sticky-bottom">
+        {% if messages %}
+        <ul class="messagelist">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }} alert-dismissible" {% endif %} role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>{{ message }}</strong>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
 
     <!-- bottom scroll -->
     <script src="{% static 'blogs/js/scroll.js' %}"></script>
