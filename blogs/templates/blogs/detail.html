@@ -3,10 +3,6 @@
 {% block content %}
 <h1>Here is ID {{ post.pk }} detail</h1>
 
-<!-- {% if post.author.pk == request.user.pk or request.user.is_superuser %}
-    <a href="{% url 'blogs:edit' post.pk %}"><button class="btn btn-primary">Edit</button></a>
-    <a href="{% url 'blogs:delete' post.pk %}"><button class="btn btn-primary">Delete</button></a>
-    {% endif %} -->
 
 <div class="container">
     <div class="row justify-content-center">
@@ -23,6 +19,22 @@
                 </div>
             </div>
         </div>
+        
+        {% if post.author.pk == request.user.pk or request.user.is_superuser %}
+        <div class="col-9 my-3">
+            <div class="row float-right">
+                <!-- Edit URL -->
+                <div class="col-4">
+                    <a href="{% url 'blogs:edit' post.pk %}"><button class="btn btn-primary">Edit</button></a>
+                </div>
+                <!-- Delete URL -->
+                <div class="col-4">
+                    <a href="{% url 'blogs:delete' post.pk %}"><button class="btn btn-primary">Delete</button></a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
         <div class="col-9">
             <div style="float:right">
                 <label class="text-muted">Updated:</label>
