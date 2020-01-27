@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 
-from .models import Post, PostEval, PostHit
+from .models import Post, PostEval, PostHit, Comment
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -22,3 +22,4 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 admin.site.register(PostEval)
 admin.site.register(PostHit)
+admin.site.register(Comment)

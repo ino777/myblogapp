@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.db.models import Q
 
 
-from .models import Post, PostEval, PostHit
+from .models import Post, PostEval, PostHit, Comment
 from .forms import PostForm
 from .logging_config import _config
 
@@ -124,12 +124,20 @@ class PostDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         post = self.get_object()
+        
+        """ Comment list """
+        context['comment_list'] = Comment.objects.filter(
+            post = post
+        ).order_by('-updated_date')
+
         if not self.request.user.is_authenticated:
             return context
         try:
+            """" Post Eval """
             context['post_eval'] = post.posteval_set.get(user=self.request.user)
+            """ Post Hit """
             context['post_hit'] = post.posthit_set.filter(post=post, hit=True)
-        except PostEval.DoesNotExist or HitPost.DoesNotExist:
+        except PostEval.DoesNotExist:
             context['post_eval'] = post.posteval_set.create(user=self.request.user)
         return context
 

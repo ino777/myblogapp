@@ -6,6 +6,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
+        <!-- Post author information -->
         <div class="col-9 my-3">
             <label hidden>Author:</label>
             <div id="author-container">
@@ -35,12 +36,14 @@
         </div>
         {% endif %}
 
+        <!-- Post updated date -->
         <div class="col-9">
             <div style="float:right">
                 <label class="text-muted">Updated:</label>
                 {{ post.published_date }}
             </div>
         </div>
+        <!-- Post media -->
         {% if post.image %}
         <div class="col-9 my-3">
             <label hidden>Image:</label>
@@ -48,12 +51,22 @@
         </div>
         {% endif %}
 
+
+        <!-- Post title -->
+        <div class="col-9 my-2">
+            <div id="post-title">
+                {{ post.title }}
+            </div>
+        </div>
+
+        <!-- Post hit -->
         <div class="col-7 mb-2 clearfix" id="hit">
             <div class="float-right">
                 <label class="text-muted">Views:</label>
                 <span id="hit-count">{{ post_hit | length}}</span>
             </div>
         </div>
+        <!-- Post Eval -->
         <div class="col-3 mb-2" id="post_eval">
             <div id="posteval-container" class="row float-right">
                 <div class="posteval col" id="good-container">
@@ -66,18 +79,56 @@
                 </div>
             </div>
         </div>
-        <div class="col-2"></div>
 
-        <div class="col-9 my-3">
-            <label>Title:</label>
-            {{ post.title }}
-        </div>
-        <div class="col-9 my-3">
-            <label>Description:</label>
-            {{ post.text | linebreaksbr }}
+
+        <div class="border col-9"></div>
+        <!-- PostText -->
+        <div class="col-9 my-2">
+            <div id="post-text">
+                {{ post.text | linebreaksbr }}
+            </div>
         </div>
     </div>
 
+</div>
+
+<div id="comment" class="container">
+    <div>
+        <h4>Comments</h4>
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <div id="comment-list">
+
+                {% for comment in comment_list %}
+                <div class="border"></div>
+                    <div id="comment-box" class="row justify-content-center my-3">
+                        <!-- Comment user -->
+                        <div id="comment-user-container" class="col-12">
+                            <a href="{% url 'blogs:user_page' comment.user.pk %}">
+                                <div id="user-icon">
+                                    <img src="{{ comment.user.icon_image.url }}" id="comment-user-icon-image">
+                                </div>
+                            </a>
+                            <div id="comment-user-name">
+                                {{ comment.user.username }}
+                            </div>
+                        </div>
+                        <!-- Comment text -->
+                        <div class="col-1"></div>
+                        <div id="comment-text" class="col-11">
+                            {{ comment.text }}
+                        </div>
+                        <!-- Comment date -->
+                        <div id="comment-date" class="col-12 text-right">
+                            {{ comment.updated_date }}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {% csrf_token %}

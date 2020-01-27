@@ -51,10 +51,15 @@ ul.navbar-nav li.nav-item{
 }
 
 /* Message */
+
 #messages-container{
     margin:5px auto;
     width: auto;
-    max-width: 700px;
+    min-width: 400px;
+    text-align: center;
+
+    position: fixed;
+    bottom: 0;
 }
 
 .messagelist{
@@ -246,4 +251,23 @@ div.thumbnail-box{
 }
 #bad-button{
     border: 1px rgba(163, 159, 159, 0.699) solid;
+}
+
+/* comment */
+#comment-user-container{
+    height: 45px;
+}
+
+
+#comment-user-icon-image {
+    width: auto;
+    height: 100%;
+    border-radius: 50%;
+    background-position: center center;
+}
+
+#comment-user-name{
+    font-size:100%;
+    padding: 10px;
+    float: left;
 }
