@@ -66,15 +66,16 @@
                 <span id="hit-count">{{ post_hit | length}}</span>
             </div>
         </div>
+
         <!-- Post Eval -->
-        <div class="col-3 mb-2" id="post_eval">
+        <div class="col-2 mb-2" id="post_eval">
             <div id="posteval-container" class="row float-right">
                 <div class="posteval col" id="good-container">
-                    <button class="btn" id="good-button">Good</button>
+                    <button class="btn" id="good-button"><div class="icon"><i class="far fa-thumbs-up"></i></div></button>
                     <div id="good-count" class="text-center"></div>
                 </div>
                 <div class="posteval col" id="bad-container">
-                    <button class="btn" id="bad-button">Bad</button>
+                    <button class="btn" id="bad-button"><div class="icon"><i class="far fa-thumbs-down"></i></div></button>
                     <div id="bad-count" class="text-center"></div>
                 </div>
             </div>

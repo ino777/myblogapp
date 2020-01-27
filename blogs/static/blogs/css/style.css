@@ -248,9 +248,11 @@ div.thumbnail-box{
 }
 #good-button{
     border: 1px rgba(163, 159, 159, 0.699) solid;
+    border-radius: 100%;
 }
 #bad-button{
     border: 1px rgba(163, 159, 159, 0.699) solid;
+    border-radius: 100%;
 }
 
 /* comment */
