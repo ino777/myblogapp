@@ -130,15 +130,20 @@ class PostDetailView(generic.DetailView):
             post = post
         ).order_by('-updated_date')
 
+        """ Post Hit """
+        context['post_hit'] = post.posthit_set.filter(post=post, hit=True)
+
         if not self.request.user.is_authenticated:
             return context
+
+        """"""""""""" Login required function """""""""""""""""""
+
+        """" Post Eval """
         try:
-            """" Post Eval """
             context['post_eval'] = post.posteval_set.get(user=self.request.user)
-            """ Post Hit """
-            context['post_hit'] = post.posthit_set.filter(post=post, hit=True)
         except PostEval.DoesNotExist:
             context['post_eval'] = post.posteval_set.create(user=self.request.user)
+
         return context
 
 
