@@ -26,7 +26,7 @@ User = get_user_model()
 
 # Create your views here.
 class PostListView(generic.ListView):
-    """ Render a list of post objects """
+    """ List view of the posts created in the past """
     template_name = 'blogs/index.html'
     context_object_name = 'latest_post_list'
     paginate_by = 24
@@ -42,7 +42,7 @@ class PostListView(generic.ListView):
 
 
 class SeaechResultPostView(generic.ListView):
-    """ A list view for rendering search results of the given queryset """
+    """ List view for rendering search results of the given query """
     template_name = 'blogs/result.html'
     context_object_name = 'result_post_list'
     paginate_by = 24
@@ -86,7 +86,7 @@ class SeaechResultPostView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         """
-        Return the context including some paths and each path's query does not including one param.
+        Return the context including some paths. Each path's query does not including one param.
         """
         context = super().get_context_data(**kwargs)
         query_context = {}
@@ -114,7 +114,7 @@ class SeaechResultPostView(generic.ListView):
 
 
 class PostDetailView(generic.DetailView):
-    """ Render the detail of the post """
+    """ Detail view of posts """
     model = Post
     template_name = 'blogs/detail.html'
 
@@ -136,7 +136,7 @@ class PostDetailView(generic.DetailView):
         if not self.request.user.is_authenticated:
             return context
 
-        """"""""""""" Login required function """""""""""""""""""
+        """"""""""""" Login required functions """""""""""""""""""
 
         """" Post Eval """
         try:
@@ -148,7 +148,7 @@ class PostDetailView(generic.DetailView):
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
-    """ A view which creates new post """
+    """ Create view of posts """
     login_url = reverse_lazy('login')
     model = Post
     form_class = PostForm
@@ -166,7 +166,7 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
-    """ A update view of post """
+    """ Update view of posts """
     login_url = reverse_lazy('accounts:login')
     model = Post
     form_class = PostForm
@@ -179,6 +179,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
         return current_user.pk == author.pk or current_user.is_superuser
 
     def get_success_url(self):
+        """ If user can update the post, they are redirected to here """
         return reverse_lazy('blogs:detail', kwargs={'pk': self.kwargs['pk']})
 
     def form_valid(self, form):
@@ -192,7 +193,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
-    """ A delete view of post """
+    """ Delete view of posts """
     login_url = reverse_lazy('accounts:login')
     model = Post
     form_class = PostForm
@@ -211,7 +212,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
 
 
 class UserPageView(generic.TemplateView):
-    """ A view of user page """
+    """ User page view """
     template_name = 'blogs/user_page.html'
 
     def get_context_data(self, **kwargs):
@@ -221,7 +222,7 @@ class UserPageView(generic.TemplateView):
 
 
 class UserPostListView(generic.ListView):
-    """ Render a list of posts published by the user """
+    """ List view of the posts published by the user """
     template_name = 'blogs/user_posts.html'
     context_object_name = 'my_post_list'
     paginate_by = 15
@@ -242,7 +243,7 @@ class UserPostListView(generic.ListView):
 
 
 class UserProfileView(generic.TemplateView):
-    """ Render user profile """
+    """ User profile view """
     template_name = 'blogs/user_profile.html'
 
     def get_context_data(self, **kwargs):

@@ -28,7 +28,7 @@ def make_dummy_image():
 
 def create_post(author, title, days, text='TEST'):
     """ 
-    Return post object 
+    Create post object 
     
     Args:
         author, title, days, text(default=TEST)
@@ -46,16 +46,19 @@ def create_post(author, title, days, text='TEST'):
 
 
 class PostListViewTests(TestCase):
+    """ Test PostListView """
     def setUp(self):
         self.user = User.objects.create_user('tester', 'a@gfmk.com', 'password')
 
     def test_no_post(self):
+        """ If there are no posts, an appropriate message is displayed """
         response = self.client.get(reverse('blogs:index'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'No post exists.')
         self.assertQuerysetEqual(response.context['latest_post_list'], [])
 
     def test_past_post(self):
+        """ Posts with a published_date in the past are displayed on the index page """
         create_post(author=self.user, title='Past post', days=-30)
         response = self.client.get(reverse('blogs:index'))
         self.assertQuerysetEqual(
@@ -64,12 +67,14 @@ class PostListViewTests(TestCase):
         )
     
     def test_future_post(self):
+        """ Posts with a published_date in the future are not displayed on the index page """
         create_post(author=self.user, title='Future post', days=+30)
         response = self.client.get(reverse('blogs:index'))
         self.assertContains(response, 'No post exists.')
         self.assertQuerysetEqual(response.context['latest_post_list'], [])
 
     def test_two_past_post(self):
+        """ The index page display multiple post """
         create_post(author=self.user, title='Past post 1', days=-30)
         create_post(author=self.user, title='Past post 2', days=-5)
         response = self.client.get(reverse('blogs:index'))
@@ -79,6 +84,7 @@ class PostListViewTests(TestCase):
         )
 
     def test_past_and_future_post(self):
+        """ If there are past posts and future posts, only past posts are displayed """
         create_post(author=self.user, title='Past post', days=-30)
         create_post(author=self.user, title='Future post', days=+30)
         response = self.client.get(reverse('blogs:index'))
@@ -89,24 +95,29 @@ class PostListViewTests(TestCase):
 
  
 class PostDetailViewTests(TestCase):
+    """ Test PostDetailView """
     def setUp(self):
         self.user = User.objects.create_user('tester', 'a@gfmk.com', 'password')
         self.user.icon_image = File(make_dummy_image())
         self.user.save()
 
     def test_past_post(self):
+        """ Posts with a published_date in the past are displayed on detail page """
         past_post = create_post(author=self.user, title='Past post', days=-30)
         response = self.client.get(reverse('blogs:detail', args=(past_post.id,)))
         self.assertContains(response, past_post.title)
 
     def test_future_post(self):
+        """ Posts with a published_date in the future are not displayed on detail page """
         future_post = create_post(author=self.user, title='Future post', days=+30)
         response = self.client.get(reverse('blogs:detail', args=(future_post.id,)))
         self.assertEqual(response.status_code, 404)
 
 
 class PostCreateViewTests(TestCase):
+    """ Test PostCreateView"""
     def test_not_logined_post(self):
+        """ If the user are not authenticated, they are redirected to login page """
         form_data = {
             'title': 'Post',
             'text': 'TEST POST',
@@ -120,8 +131,9 @@ class PostCreateViewTests(TestCase):
         )
 
     def test_logined_post(self):
+        """ If the user are authenticated, they can create post and are redirected to index page """
         self.client.force_login(
-            User.objects.create_user('tester', 'tarou.xxx.0129@gmail.com', 'password'))
+            User.objects.create_user('tester', 'test@gmail.com', 'password'))
         form_data = {
             'title': 'Post',
             'text': 'TEST POST',
@@ -132,12 +144,14 @@ class PostCreateViewTests(TestCase):
 
 
 class PostUpdateViewTests(TestCase):
+    """ Test PostUpdateView """
     def setUp(self):
-        self.user = User.objects.create_user('tester', 'a@gfmk.com', 'password')
+        self.user = User.objects.create_user('tester', 'test@gmail.com', 'password')
         self.post = create_post(author=self.user, title='Post', days=-30)
         self.post.save()
 
     def test_not_logined_update(self):
+        """ If the user are not authenticated, they are redirected to login page """
         change_data = {
             'title': 'Changed Post',
             'text': 'Changed TEST',
@@ -151,16 +165,18 @@ class PostUpdateViewTests(TestCase):
         )
 
     def test_other_user_update(self):
+        """ If other user try to update the post, it reuturns 403 """
         change_data = {
             'title': 'Changed Post',
             'text': 'Changed TEST',
             'image': make_dummy_image()
         }
-        self.client.force_login(User.objects.create_user('other_user', 'b@gfmk.com', 'password'))
+        self.client.force_login(User.objects.create_user('other_user', 'other@gmail.com', 'password'))
         response = self.client.put(reverse('blogs:edit', args=(self.post.pk,)), data=change_data)
         self.assertEqual(response.status_code, 403)
 
     def test_update(self):
+        """ If the user are authenticated and the poster of the post, they can update it """
         change_data = {
             'title': 'Changed Post',
             'text': 'Changed TEST',
@@ -172,12 +188,14 @@ class PostUpdateViewTests(TestCase):
 
 
 class PostDeleteViewTests(TestCase):
+    """ Test PostDelateView """
     def setUp(self):
         self.user = User.objects.create_user('tester', 'a@gfmk.com', 'password')
         self.post = create_post(author=self.user, title='Post', days=-30)
         self.post.save()
 
     def test_not_logined_delete(self):
+        """ If the user are not authenticated, they are redirected to login page """
         response = self.client.delete(reverse('blogs:delete', args=(self.post.pk,)))
         query = dict(next=reverse('blogs:delete', args=(self.post.pk,)))
         self.assertRedirects(
@@ -186,11 +204,13 @@ class PostDeleteViewTests(TestCase):
         )
 
     def test_other_user_delete(self):
+        """ If other user try to delete the post, it returns 403 """
         self.client.force_login(User.objects.create_user('other_user', 'b@gfmk.com', 'password'))
         response = self.client.delete(reverse('blogs:delete', args=(self.post.pk,)))
         self.assertEqual(response.status_code, 403)
 
     def test_delete(self):
+        """ If the user are authenticated and the poster of the post, they can delete it """
         self.client.force_login(self.user)
         response = self.client.delete(reverse('blogs:delete', args=(self.post.pk,)))
         self.assertRedirects(response, reverse('blogs:index'))
