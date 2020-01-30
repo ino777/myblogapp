@@ -33,5 +33,5 @@ urlpatterns = [
     # path('result/filter', views.SearchFilterView.as_view(), name='search_filter'),
     path('user/<uuid:pk>/home', views.UserPageView.as_view(), name='user_page'),
     path('user/<uuid:pk>/posts', views.UserPostListView.as_view(), name='user_posts'),
-    path('user/<uuid:pk>/profile', views.UserProfileView.as_view(), name='profile'),
+    path('user/<uuid:pk>/profile', views.UserProfileView.as_view(), name='user_profile'),
 ]
