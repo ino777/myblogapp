@@ -41,7 +41,7 @@ class PostListView(generic.ListView):
         return queryset
 
 
-class SeaechResultPostView(generic.ListView):
+class SearchResultPostView(generic.ListView):
     """ List view for rendering search results of the given query """
     template_name = 'blogs/result.html'
     context_object_name = 'result_post_list'
