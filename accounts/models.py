@@ -12,6 +12,9 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
 
+# Default user icon image ( /media/DEFAULT_USER_ICON_IMAGE )
+DEFAULT_USER_ICON_IMAGE = 'default-user-icon.png'
+
 # Create your models here.
 class UserManager(BaseUserManager):
     """ User manager """
@@ -68,7 +71,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         upload_to=settings.USER_ICON_UPLOAD_DIR,
         processors=[ResizeToFill(200, 200)],
         format='JPEG',
-        options={'quality': 60}
+        options={'quality': 60},
+        default=DEFAULT_USER_ICON_IMAGE
     )
 
     first_name = models.CharField(_('first name'), max_length=20, blank=True)

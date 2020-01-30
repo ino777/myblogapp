@@ -6,5 +6,6 @@
 logging.log*
 *.jpg
 *.png
-media
+media/*
+!media/default-user-icon.png
 db.sqlite3
