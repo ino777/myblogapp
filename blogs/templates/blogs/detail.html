@@ -25,12 +25,16 @@
         <div class="col-9 my-3">
             <div class="row float-right">
                 <!-- Edit URL -->
-                <div class="col-4">
-                    <a href="{% url 'blogs:edit' post.pk %}"><button class="btn btn-primary">Edit</button></a>
+                <div class="col-5">
+                    <a href="{% url 'blogs:edit' post.pk %}">
+                        <button class="btn border" style="white-space: nowrap;">Edit   <i class="far fa-edit"></i></button>
+                    </a>
                 </div>
                 <!-- Delete URL -->
-                <div class="col-4">
-                    <a href="{% url 'blogs:delete' post.pk %}"><button class="btn btn-primary">Delete</button></a>
+                <div class="col-5">
+                    <a href="{% url 'blogs:delete' post.pk %}">
+                        <button class="btn border" style="white-space: nowrap;">Delete   <i class="far fa-trash-alt"></i></button>
+                    </a>
                 </div>
             </div>
         </div>

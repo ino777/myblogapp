@@ -10,27 +10,37 @@
             {{ form.non_field_errors }}
             <div class="row flex-column align-items-center">
                 {% for field in form %}
+                <!-- Title -->
                 <div class="field col-9 col-md-9">
                     {{ field.label }}
                 </div>
+                <!-- Textarea -->
                 <div class="field col-9 col-md-9 my-3">
                     {{ field }}
                 </div>
+                <!-- Help text -->
                 <div class="field col-9 col-md-9">
                     {% if field.help_text %}
                     <span class="field_help_text">{{ field.help_text}}</span>
                     {% endif %}
                 </div>
+                <!-- Error -->
                 <div class="field col-9 col-md-9">
                     {{ field.errors }}
                 </div>
                 {% endfor %}
+
+                <!-- Media -->
                 {{ form.media }}
             </div>
+
+            <!-- Button -->
             <div class="row flex-column align-items-end">
                 <div class="col-2 col-sm-2 mx-3"><button id="post_btn" type="submit" class="btn btn-primary btn-lg">Post</button></div>
             </div>
         </form>
+
+        
         <!-- preview image -->
         <div class="row align-items-center">
             <img id="image-preview" class="col-6 col-sm-6 col-md-5 col-lg-4 mx-auto">

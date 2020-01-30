@@ -9,17 +9,27 @@
     <div class="row align-items-center contents">
         {% for post in latest_post_list %}
         <div class="col-lg-3 col-md-4 col-sm-6 mh-100 thumbnail-box">
+            <!-- Post info -->
             <a class="thumbnail" href="{% url 'blogs:detail' post.pk %}">
                 <img class="img-fluid" src="{{ post.image_thumbnail.url }}" alt="{{ post.title }}">
-                <div id="thumbnail-title" class="text-center">
+                <!-- <div id="thumbnail-title" class="text-center">
                     {{ post.title }}
-                </div>
+                </div> -->
             </a>
+
+            <!-- Author info
             <div id="thumbnail-author" class="text-center">
-                <a href="{%url 'blogs:user_page' post.author.pk %}">
-                    {{ post.author.username }}
+                <a href="{% url 'blogs:user_page' post.author.pk %}">
+                    <div id="thumbnail-author-icon">
+                        <img src="{{ post.author.icon_image.url }}" id="thumbnail-author-icon-image">
+                    </div>
                 </a>
-            </div>
+                <a href="{%url 'blogs:user_page' post.author.pk %}">
+                    <div id="thumbnail-author-name">
+                        {{ post.author.username }}
+                    </div>
+                </a>
+            </div> -->
         </div>
         {% endfor %}
     </div>
