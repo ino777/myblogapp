@@ -101,7 +101,8 @@ class Comment(models.Model):
     text = models.TextField(max_length=200)
 
     created_date = models.DateTimeField(default=timezone.now)
-    updated_date = models.DateTimeField(null=True, default=timezone.ZERO)
+    updated_date = models.DateTimeField(default=timezone.now)
+    was_updated = models.BooleanField(default=False)
 
 
 class CommentReply(models.Model):
@@ -112,5 +113,6 @@ class CommentReply(models.Model):
     text = models.TextField(max_length=200)
 
     created_date = models.DateTimeField(default=timezone.now)
-    updated_date = models.DateTimeField(null=True, default=timezone.ZERO)
+    updated_date = models.DateTimeField(default=timezone.now)
+    was_updated = models.BooleanField(default=False)
     
