@@ -63,7 +63,8 @@ class SearchResultPostView(generic.ListView):
         """ Return queryset filtered by the given parameters """
         if not self.request.GET.get('q'):
             return None
-
+        
+        """ Get queryset matching with search words """
         query_list = self.parse_search_params(self.request.GET['q'])
         query = Q()
         for word in query_list:
@@ -72,10 +73,13 @@ class SearchResultPostView(generic.ListView):
                 | Q(author__username__icontains=word)
                 | Q(title__icontains=word)
             )
-
+        
+        """ sort """
         if self.request.GET.get('sort'):
             self.sort_key = self.request.GET['sort']
-
+        
+        """"""" filter """""""""
+        """ day """
         if self.request.GET.get('day'):
             self.start_day = int(self.request.GET['day'])
             start_datetime = timezone.now() - datetime.timedelta(days=self.start_day)
@@ -131,7 +135,7 @@ class PostDetailView(generic.DetailView):
         ).order_by('-updated_date')
 
         """ Post Hit """
-        context['post_hit'] = post.posthit_set.filter(post=post, hit=True)
+        context['post_hit'] = post.posthit_set.filter(hit=True)
 
         if not self.request.user.is_authenticated:
             return context
@@ -140,9 +144,9 @@ class PostDetailView(generic.DetailView):
 
         """" Post Eval """
         try:
-            context['post_eval'] = post.posteval_set.get(user=self.request.user)
+            context['my_post_eval'] = post.posteval_set.get(user=self.request.user)
         except PostEval.DoesNotExist:
-            context['post_eval'] = post.posteval_set.create(user=self.request.user)
+            context['my_post_eval'] = post.posteval_set.create(user=self.request.user)
 
         return context
 

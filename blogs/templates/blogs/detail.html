@@ -197,7 +197,7 @@
             .done((response) => {
                 good_count = Object.keys(response).length;
                 good_field.html(good_count);
-                if ('{{ post_eval.good }}' == 'True') {
+                if ('{{ my_post_eval.good }}' == 'True') {
                     good_button.addClass(good_selected);
                 }
             })
@@ -218,7 +218,7 @@
             .done((response) => {
                 bad_count = Object.keys(response).length;
                 bad_field.html(bad_count);
-                if ('{{ post_eval.bad }}' == 'True') {
+                if ('{{ my_post_eval.bad }}' == 'True') {
                     bad_button.addClass(bad_selected);
                 }
             })
@@ -266,7 +266,7 @@
 
         var putPostEval = function (good, bad) {
             $.ajax({
-                url: '{% url "apis:posteval-detail" post_eval.pk %}',
+                url: '{% url "apis:posteval-detail" my_post_eval.pk %}',
                 method: 'PUT',
                 data: {
                     'post': '{{ post.pk }}',
