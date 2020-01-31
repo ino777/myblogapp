@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 
-from .views import PostAPIView, PostEvalAPIView, PostHitAPIView
+from .views import PostAPIView, PostEvalAPIView, PostHitAPIView, CommentAPIView
 
 
 router = routers.DefaultRouter()
@@ -11,6 +11,7 @@ router = routers.DefaultRouter()
 router.register(r'posts', PostAPIView)
 router.register(r'post_evals', PostEvalAPIView)
 router.register(r'post_hits', PostHitAPIView)
+router.register(r'comments', CommentAPIView)
 
 
 app_name = 'apis'

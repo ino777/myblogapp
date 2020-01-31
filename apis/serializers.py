@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 
-from blogs.models import Post, PostEval, PostHit
+from blogs.models import Post, PostEval, PostHit, Comment
 
 
 User = get_user_model()
@@ -33,4 +33,13 @@ class PostHitSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PostHit
+        fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+    """ Comment serializer """
+    post = serializers.PrimaryKeyRelatedField(queryset=Post.objects.all())
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+
+    class Meta:
+        model = Comment
         fields = '__all__'
