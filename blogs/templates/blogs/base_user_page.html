@@ -43,7 +43,7 @@
                 {% endif %}
             </div>
             <div class="tab-item col-2" id="tab-settings">
-                {% url 'blogs:profile' dest_user.pk as profile_url %}
+                {% url 'blogs:user_profile' dest_user.pk as profile_url %}
                 {% if request.path_info == profile_url %}
                 <a class="disabled">
                     <div class="background" id="tab-current">Profile</div>
