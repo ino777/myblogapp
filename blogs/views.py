@@ -137,6 +137,10 @@ class PostDetailView(generic.DetailView):
         """ Post Hit """
         context['post_hit'] = post.posthit_set.filter(hit=True)
 
+        """ Post Eval """
+        context['post_eval_good'] = post.posteval_set.filter(good=True, bad=False)
+        context['post_eval_bad'] = post.posteval_set.filter(good=False, bad=True)
+
         if not self.request.user.is_authenticated:
             return context
 

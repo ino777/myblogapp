@@ -76,11 +76,11 @@
             <div id="posteval-container" class="row float-right">
                 <div class="posteval col" id="good-container">
                     <button class="btn" id="good-button"><div class="icon"><i class="far fa-thumbs-up"></i></div></button>
-                    <div id="good-count" class="text-center"></div>
+                    <div id="good-count" class="text-center">{{ post_eval_good | length }}</div>
                 </div>
                 <div class="posteval col" id="bad-container">
                     <button class="btn" id="bad-button"><div class="icon"><i class="far fa-thumbs-down"></i></div></button>
-                    <div id="bad-count" class="text-center"></div>
+                    <div id="bad-count" class="text-center">{{ post_eval_bad | length }}</div>
                 </div>
             </div>
         </div>
@@ -94,53 +94,16 @@
             </div>
         </div>
     </div>
-
 </div>
 
-<div id="comment" class="container">
-    <div>
-        <h4>Comments</h4>
-        <div class="row justify-content-center">
-            <div class="col-10">
-                <div id="comment-list">
 
-                {% for comment in comment_list %}
-                <div class="border"></div>
-                    <div id="comment-box" class="row justify-content-center my-3">
-                        <!-- Comment user -->
-                        <div id="comment-user-container" class="col-12">
-                            <a href="{% url 'blogs:user_page' comment.user.pk %}">
-                                <div id="user-icon">
-                                    <img src="{{ comment.user.icon_image.url }}" id="comment-user-icon-image">
-                                </div>
-                            </a>
-                            <div id="comment-user-name">
-                                {{ comment.user.username }}
-                            </div>
-                        </div>
-                        <!-- Comment text -->
-                        <div class="col-1"></div>
-                        <div id="comment-text" class="col-11">
-                            {{ comment.text }}
-                        </div>
-                        <!-- Comment date -->
-                        <div id="comment-date" class="col-12 text-right">
-                            {{ comment.updated_date }}
-                        </div>
-                    </div>
-                {% endfor %}
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% csrf_token %}
 
 <script>
     // postHit
-    // Need {% csrf_token %}
+    // Need csrf_token 
 
     $(function(){
         var hit = '{{ post_hit | length }}'
@@ -171,62 +134,26 @@
 
 <script>
     // postEval
-    // Need {% csrf_token %}
+    // Need csrf_token
 
     $(function () {
         var good_button = $('#good-button');
         var bad_button = $('#bad-button');
         var good_field = $('#good-count');
         var bad_field = $('#bad-count');
-        var good_count = 0;
-        var bad_count = 0;
+        var good_count = Number('{{ post_eval_good | length }}');
+        var bad_count = Number('{{ post_eval_bad | length }}');
 
         const good_selected = 'btn-primary';
         const bad_selected = 'btn-danger';
 
-        // GET method
-        $.ajax({
-            url: '{% url "apis:posteval-list" %}',
-            method: 'GET',
-            data: {
-                'post': '{{ post.pk }}',
-                'good': true,
-                'bad': false,
-            }
-        })
-            .done((response) => {
-                good_count = Object.keys(response).length;
-                good_field.html(good_count);
-                if ('{{ my_post_eval.good }}' == 'True') {
-                    good_button.addClass(good_selected);
-                }
-            })
-            .fail((response) => {
-                console.log('GET method fail!');
-                good_count = 0;
-            })
+        if ('{{ my_post_eval.good }}' == 'True') {
+            good_button.addClass(good_selected);
+        }
 
-        $.ajax({
-            url: '{% url "apis:posteval-list" %}',
-            method: 'GET',
-            data: {
-                'post': '{{ post.pk }}',
-                'good': false,
-                'bad': true
-            }
-        })
-            .done((response) => {
-                bad_count = Object.keys(response).length;
-                bad_field.html(bad_count);
-                if ('{{ my_post_eval.bad }}' == 'True') {
-                    bad_button.addClass(bad_selected);
-                }
-            })
-            .fail((response) => {
-                console.log('GET method fail!');
-                bad_count = 0;
-            })
-
+        if ('{{ my_post_eval.bad }}' == 'True') {
+            bad_button.addClass(bad_selected);
+        }
 
         '{% if user.is_authenticated %}'
         // PUT Method
