@@ -18,13 +18,3 @@ class PostForm(forms.ModelForm):
             'image': FileInputWithPreview,
         }
 
-
-class CommentForm(forms.ModelForm):
-    """ Comment form """
-
-    class Meta:
-        model = Comment
-        fields = ('text',)
-        widgets = {
-            'text': forms.Textarea(attrs={'rows': 10, 'cols': 80, 'max-rows': 50, 'id': 'comment_form'}),
-        }

@@ -1,0 +1,129 @@
+<div id="comment" class="container">
+    <div>
+        <h4>{{comment_list | length }} Comments</h4>
+        <div class="row justify-content-center">
+            <div class="col-10">
+                <!-- Comment Form -->
+                <div id="comment-post">
+                    <div id="comment-post-box" class="row clearfix">
+                        <div class="col-1"></div>
+                        <textarea id="comment-post-text" class="col-10" rows="1" placeholder="comment..."></textarea>
+                        <div class="col-1"></div>
+                        <div class="col-10"></div>
+                        <div class="col-2 my-2 float-right">
+                            <button id="comment-post-button" class="btn btn-primary">Comment</button>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Created comment -->
+                <div id="new-comment-list">
+                    <div class="border"></div>
+                    <div id="new-comment-box" class="row justify-content-center my-3"  hidden>
+                        <div id="comment-user-container" class="col-12">
+                            <a href="{% url 'blogs:user_page' user.pk %}">
+                            <div id="user-icon">
+                                <img src="{{ user.icon_image.url }}" id="comment-user-icon-image">
+                            </div>
+                            </a>
+                            <div id="comment-user-name">
+                                {{ user.username }}
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                        <div id="comment-text" class="col-11">
+                        </div>
+                        <div id="comment-date" class="col-12 text-right">
+                            Just Now
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Comment List -->
+                <div id="comment-list">
+
+                    {% for comment in comment_list %}
+                    <div class="border"></div>
+                    <div id="comment-box" class="row justify-content-center my-3">
+                        <!-- Comment user -->
+                        <div id="comment-user-container" class="col-12">
+                            <a href="{% url 'blogs:user_page' comment.user.pk %}">
+                                <div id="user-icon">
+                                    <img src="{{ comment.user.icon_image.url }}" id="comment-user-icon-image">
+                                </div>
+                            </a>
+                            <div id="comment-user-name">
+                                {{ comment.user.username }}
+                            </div>
+                        </div>
+                        <!-- Comment text -->
+                        <div class="col-1"></div>
+                        <div id="comment-text" class="col-11">
+                            {{ comment.text | linebreaksbr }}
+                        </div>
+                        <!-- Comment date -->
+                        <div id="comment-date" class="col-12 text-right">
+                            {{ comment.updated_date }}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% csrf_token %}
+<script>
+    // Comment Post
+    $(function(){
+        var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        var $textarea = $('#comment-post-text');
+        $('#comment-post-button').on('click', function(){
+            var $text = $.trim($('#comment-post-text').val());
+            var $commentBox = $('#new-comment-box');
+            var $commentList = $('#new-comment-list');
+
+            $.ajax({
+                url: '{% url "apis:comment-list" %}',
+                method: 'POST',
+                data: {
+                    'user': '{{ user.pk }}',
+                    'post': '{{ post.pk }}',
+                    'text': $text,
+                },
+                headers: { "X-CSRFToken": $crf_token }, // csrf_token
+            })
+                .done((response)=>{
+                    // add created comment
+                    $commentBox.clone(true).prependTo(
+                        $commentList).removeAttr('hidden').find('#comment-text').html($text.replace(/\n/g, '<br/>'));
+                    $commentList.prepend('<div class="border"></div>');
+
+                    // textarea init
+                    $textarea.val('');
+                    $textarea.height(parseInt($textarea.css('lineHeight')));
+                })
+                .fail((reponse)=>{
+                    console.log('Comment Post Fail!');
+                })
+        })
+    })
+
+    // Comment textarea auto line
+    $(function() {
+        var $textarea = $('#comment-post-text');
+        var lineHeight = parseInt($textarea.css('lineHeight'));
+        $textarea.on('input', function(e) {
+            if ($(this).outerHeight() > this.scrollHeight){
+                $(this).height(lineHeight);
+            }
+            while ($(this).outerHeight() < this.scrollHeight){
+                $(this).height($(this).height() + lineHeight)
+            }
+        });
+    });
+</script>

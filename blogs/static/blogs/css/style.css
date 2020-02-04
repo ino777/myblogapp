@@ -274,6 +274,12 @@ div.thumbnail-box{
 }
 
 /* comment */
+#comment-post-text{
+    border: none;
+    border-bottom: 1px solid;
+    line-height: 35px;
+}
+
 #comment-user-container{
     height: 45px;
 }
