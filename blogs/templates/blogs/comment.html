@@ -68,7 +68,7 @@
                     </div>
                     <!-- Comment date -->
                     <div id="comment-date" class="col-12 text-right">
-                        {{ comment.updated_date }}
+                        {{ comment.updated_date | date:'Y/m/d'}}
                     </div>
                 </div>
                 {% endfor %}
@@ -90,6 +90,12 @@
             var $text = $.trim($('#comment-post-text').val());
             var $commentBox = $('#new-comment-box');
             var $commentList = $('#new-comment-list');
+
+            // Limitation of a comment up to 200 characters
+            if ($text.length > 200){
+                alert("You can only comment up to 200 characters");
+                return;
+            }
 
             $.ajax({
                 url: '{% url "apis:comment-list" %}',
