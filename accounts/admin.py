@@ -28,7 +28,7 @@ class MyUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('id', 'email', 'password')}),
         (_('Personal info'), {
-            'fields': ('username', 'icon_image', 'first_name', 'last_name', 'birth_date')}),
+            'fields': ('username', 'icon_image', 'profile_message', 'first_name', 'last_name', 'birth_date')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'reg_date')}),

@@ -75,6 +75,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=DEFAULT_USER_ICON_IMAGE
     )
 
+    profile_message = models.TextField(
+        max_length=500,
+        blank=True,
+    )
+
     first_name = models.CharField(_('first name'), max_length=20, blank=True)
     last_name = models.CharField(_('last name'), max_length=20, blank=True)
 
