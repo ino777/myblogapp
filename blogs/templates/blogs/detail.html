@@ -67,7 +67,7 @@
         <div class="col-7 mb-2 clearfix" id="hit">
             <div class="float-right">
                 <label class="text-muted">Views:</label>
-                <span id="hit-count">{{ post_hit | length}}</span>
+                <span id="hit-count">{{ post_hit }}</span>
             </div>
         </div>
 
@@ -76,11 +76,11 @@
             <div id="posteval-container" class="row float-right">
                 <div class="posteval col" id="good-container">
                     <button class="btn require-login" id="good-button"><div class="icon"><i class="far fa-thumbs-up"></i></div></button>
-                    <div id="good-count" class="text-center">{{ post_eval_good | length }}</div>
+                    <div id="good-count" class="text-center">{{ post_eval_good }}</div>
                 </div>
                 <div class="posteval col" id="bad-container">
                     <button class="btn require-login" id="bad-button"><div class="icon"><i class="far fa-thumbs-down"></i></div></button>
-                    <div id="bad-count" class="text-center">{{ post_eval_bad | length }}</div>
+                    <div id="bad-count" class="text-center">{{ post_eval_bad }}</div>
                 </div>
             </div>
         </div>
@@ -108,7 +108,7 @@
     // Need csrf_token 
 
     $(function(){
-        var hit = '{{ post_hit | length }}'
+        var hit = '{{ post_hit }}'
         $('#hit-count').html(hit);
 
         // POST method
@@ -142,8 +142,8 @@
         var bad_button = $('#bad-button');
         var good_field = $('#good-count');
         var bad_field = $('#bad-count');
-        var good_count = Number('{{ post_eval_good | length }}');
-        var bad_count = Number('{{ post_eval_bad | length }}');
+        var good_count = Number('{{ post_eval_good }}');
+        var bad_count = Number('{{ post_eval_bad }}');
 
         const good_selected = 'btn-primary';
         const bad_selected = 'btn-danger';

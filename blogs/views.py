@@ -135,11 +135,11 @@ class PostDetailView(generic.DetailView):
         ).order_by('-updated_date')
 
         """ Post Hit """
-        context['post_hit'] = post.posthit_set.filter(hit=True)
+        context['post_hit'] = post.count_hits()
 
         """ Post Eval """
-        context['post_eval_good'] = post.posteval_set.filter(good=True, bad=False)
-        context['post_eval_bad'] = post.posteval_set.filter(good=False, bad=True)
+        context['post_eval_good'] = post.count_goods()
+        context['post_eval_bad'] = post.count_bads()
 
         if not self.request.user.is_authenticated:
             return context

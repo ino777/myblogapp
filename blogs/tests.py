@@ -173,7 +173,7 @@ class PostDetailViewTests(TestCase):
         hit = PostHit.objects.create(user=self.user, post=post, hit=True, created_date=timezone.now())
         response = self.client.get(reverse('blogs:detail', args=(post.id,)))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context['post_hit'], ['<PostHit: PostHit object (1)>'])
+        self.assertEqual(response.context['post_hit'], 1)
 
 
 class PostCreateViewTests(TestCase):

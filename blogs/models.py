@@ -25,6 +25,9 @@ class Post(models.Model):
         source='image', processors=[ResizeToFill(640, 360)], format='JPEG', options={'quality': 60})
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True, default=timezone.now)
+    hits = models.PositiveIntegerField(blank=True, null=True, default=0)
+    goods = models.PositiveIntegerField(blank=True, null=True, default=0)
+    bads = models.PositiveIntegerField(blank=True, null=True, default=0)
 
     def __str__(self):
         return self.title
@@ -50,6 +53,18 @@ class Post(models.Model):
     def change_image_name(self, name):
         """ Change the post image name """
         self.image.name = name
+
+    def count_hits(self):
+        self.hits = PostHit.objects.filter(post=self.pk).count()
+        return self.hits
+
+    def count_goods(self):
+        self.goods = PostEval.objects.filter(post=self.pk, good=True, bad=False).count()
+        return self.goods
+    
+    def count_bads(self):
+        self.bads = PostEval.objects.filter(post=self.pk, good=False, bad=True).count()
+        return self.bads
 
 
 class PostEval(models.Model):
