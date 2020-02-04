@@ -78,7 +78,7 @@ class PostEval(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
 
 
-class PostFavorites(models.Model):
+class PostFavorite(models.Model):
     """ A model for bookmarking post """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -88,7 +88,7 @@ class PostFavorites(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
 
 
-class UserFavorites(models.Model):
+class UserFavorite(models.Model):
     """ A model for bookmarking user """
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='userfavorite_set')
     target = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_befavorited_set')
