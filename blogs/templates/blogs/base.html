@@ -105,14 +105,14 @@
     </div> -->
 
     <!-- message framework -->
-    <div id="messages-container sticky-bottom">
+    <div id="messages-container" class="fixed-bottom">
         {% if messages %}
         <ul class="messagelist">
             {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }} alert-dismissible" {% endif %} role="alert">
-                <button type="button" class="close" data-dismiss="alert">
+            <li {% if message.tags %} class="{{ message.tags }} alert-dismissible alert-message" {% endif %} role="alert">
+                <!-- <button type="button" class="close" data-dismiss="alert">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
                 <strong>{{ message }}</strong>
             </li>
             {% endfor %}
@@ -122,6 +122,8 @@
 
     <!-- bottom scroll -->
     <script src="{% static 'blogs/js/scroll.js' %}"></script>
+
+    <script src="{% static 'blogs/js/message.js' %}"></script>
 
     <!-- Bootstrap4 -->
     <script src="{% static 'blogs/js/js/bootstrap.bundle.min.js' %}"></script>

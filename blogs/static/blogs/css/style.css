@@ -57,13 +57,11 @@ ul.navbar-nav li.nav-item{
     width: auto;
     min-width: 400px;
     text-align: center;
-
-    position: fixed;
-    bottom: 0;
 }
 
 .messagelist{
     list-style-type: none;
+    cursor: pointer;
 }
 
 /* Main content */
