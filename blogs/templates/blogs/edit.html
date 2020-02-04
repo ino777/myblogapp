@@ -38,10 +38,12 @@
             <div class="row justify-content-center my-5">
                 <div class="col-8"></div>
                 <div class="col-2">
-                    <button id="post_btn" type="submit" class="btn btn-primary btn-lg">Post</button>
+                    <button id="post_btn" type="submit" class="btn btn-primary btn-lg">Save</button>
                 </div>
                 <div class="col-2">
-                    <button id="post_cancel" type="button" class="btn border">Cancel</button>
+                    <a href="{% url 'blogs:detail' post.pk %}">
+                        <button id="post_cancel" type="button" class="btn border">Cancel</button>
+                    </a>
                 </div>
             </div>
         </form>

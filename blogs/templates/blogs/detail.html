@@ -4,7 +4,7 @@
 <h1>Here is ID {{ post.pk }} detail</h1>
 
 
-<div class="container">
+<div class="container" id="post-container">
     <div class="row justify-content-center">
         <!-- Post author information -->
         <div class="col-9 my-3">
@@ -96,9 +96,10 @@
     </div>
 </div>
 
-
 <!-- Comment -->
+<div id="comment-container" class="container">
 {% include 'blogs/comment.html' %}
+</div>
 
 {% csrf_token %}
 
@@ -131,7 +132,7 @@
     })
 </script>
 
-
+{% if user.is_authenticated %}
 <script>
     // postEval
     // Need csrf_token
@@ -155,7 +156,6 @@
             bad_button.addClass(bad_selected);
         }
 
-        '{% if user.is_authenticated %}'
         // PUT Method
         var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
 
@@ -207,8 +207,8 @@
                     console.log('PUT fail!');
                 })
         }
-        '{% endif %}'
-
-    });
+    })
 </script>
+{% endif %}
+
 {% endblock %}

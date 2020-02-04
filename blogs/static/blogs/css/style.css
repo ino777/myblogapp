@@ -272,6 +272,10 @@ div.thumbnail-box{
 }
 
 /* comment */
+#comment-container{
+    margin-top: 5rem;
+}
+
 #comment-post-text{
     border: none;
     border-bottom: 1px solid;
