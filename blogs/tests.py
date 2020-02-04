@@ -26,7 +26,7 @@ def make_dummy_image():
     file_obj.seek(0)
     return file_obj
 
-def create_post(author, title, days, text='TEST'):
+def create_post(author, title, days, text='TEST', *args, **kwargs):
     """ 
     Create post object 
     
@@ -41,7 +41,8 @@ def create_post(author, title, days, text='TEST'):
         text=text,
         image=SimpleUploadedFile(img.name, img.read(), content_type='image/png'),
         created_date=timezone.now(),
-        published_date=time
+        published_date=time,
+        **kwargs,
     )
 
 
@@ -75,8 +76,8 @@ class PostListViewTests(TestCase):
 
     def test_two_past_post(self):
         """ The index page display multiple post """
-        create_post(author=self.user, title='Past post 1', days=-30)
-        create_post(author=self.user, title='Past post 2', days=-5)
+        create_post(author=self.user, title='Past post 1', days=-30, hits=30)
+        create_post(author=self.user, title='Past post 2', days=-5, hits=100)
         response = self.client.get(reverse('blogs:index'))
         self.assertQuerysetEqual(
             response.context['latest_post_list'],

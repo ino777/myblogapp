@@ -35,7 +35,7 @@ class PostListView(generic.ListView):
         """ Return a queryset of posts whose pub_date is before now."""
         queryset = Post.objects.filter(
             published_date__lte=timezone.now()
-        ).order_by('-published_date')
+        ).order_by('-hits')
         if not queryset:
             messages.info(self.request, 'No post exists.')
         return queryset
@@ -49,7 +49,7 @@ class SearchResultPostView(generic.ListView):
 
     def __init__(self):
         super().__init__()
-        self.sort_key = '-published_date'
+        self.sort_key = '-hits'
         self.start_day = 1
 
     def get(self, request, *args, **kwargs):
