@@ -9,11 +9,23 @@
     <title>{% block title %} Document {% endblock %}</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/css/bootstrap.min.css' %}">
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'blogs/css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}">
     <!-- jQuery -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="{% static 'blogs/js/js/jquery.bottom-1.0.js' %}"></script>
+
+    <!-- Auth Exception -->
+    {% if not user.is_authenticated %}
+    <script>
+        $(function(){
+            $('.requiredAuth').attr("data-toggle", "tooltip");
+            $('.requiredAuth').attr("title", "Need to log in");
+            $('[data-toggle="tooltip"]').tooltip();
+        })
+    </script>
+    {% endif %}
 
 </head>
 

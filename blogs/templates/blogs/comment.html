@@ -12,7 +12,7 @@
                     <div class="col-1"></div>
                     <div class="col-10"></div>
                     <div class="col-2 my-2 float-right">
-                        <button id="comment-post-button" class="btn btn-primary">Comment</button>
+                        <button id="comment-post-button" class="btn btn-primary requiredAuth">Comment</button>
                     </div>
                     
                 </div>
@@ -134,13 +134,3 @@
         });
     });
 </script>
-
-{% if not user.is_authenticated %}
-<script>
-    $(function () {
-        $('#comment-post-button').on('click', function () {
-            authException();
-        })
-    })
-</script>
-{% endif %}

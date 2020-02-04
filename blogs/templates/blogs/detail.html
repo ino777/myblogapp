@@ -75,11 +75,11 @@
         <div class="col-2 mb-2" id="post_eval">
             <div id="posteval-container" class="row float-right">
                 <div class="posteval col" id="good-container">
-                    <button class="btn" id="good-button"><div class="icon"><i class="far fa-thumbs-up"></i></div></button>
+                    <button class="btn requiredAuth" id="good-button"><div class="icon"><i class="far fa-thumbs-up"></i></div></button>
                     <div id="good-count" class="text-center">{{ post_eval_good | length }}</div>
                 </div>
                 <div class="posteval col" id="bad-container">
-                    <button class="btn" id="bad-button"><div class="icon"><i class="far fa-thumbs-down"></i></div></button>
+                    <button class="btn requiredAuth" id="bad-button"><div class="icon"><i class="far fa-thumbs-down"></i></div></button>
                     <div id="bad-count" class="text-center">{{ post_eval_bad | length }}</div>
                 </div>
             </div>
