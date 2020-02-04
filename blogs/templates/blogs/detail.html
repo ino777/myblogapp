@@ -1,10 +1,10 @@
 {% extends 'blogs/base.html' %}
 {% load static %}
 {% block content %}
-<h1>Here is ID {{ post.pk }} detail</h1>
+<!-- <h1>Here is ID {{ post.pk }} detail</h1> -->
 
 
-<div class="container" id="post-container">
+<div class="container my-5" id="post-container">
     <div class="row justify-content-center">
         <!-- Post author information -->
         <div class="col-9 my-3">
@@ -75,11 +75,11 @@
         <div class="col-2 mb-2" id="post_eval">
             <div id="posteval-container" class="row float-right">
                 <div class="posteval col" id="good-container">
-                    <button class="btn requiredAuth" id="good-button"><div class="icon"><i class="far fa-thumbs-up"></i></div></button>
+                    <button class="btn require-login" id="good-button"><div class="icon"><i class="far fa-thumbs-up"></i></div></button>
                     <div id="good-count" class="text-center">{{ post_eval_good | length }}</div>
                 </div>
                 <div class="posteval col" id="bad-container">
-                    <button class="btn requiredAuth" id="bad-button"><div class="icon"><i class="far fa-thumbs-down"></i></div></button>
+                    <button class="btn require-login" id="bad-button"><div class="icon"><i class="far fa-thumbs-down"></i></div></button>
                     <div id="bad-count" class="text-center">{{ post_eval_bad | length }}</div>
                 </div>
             </div>

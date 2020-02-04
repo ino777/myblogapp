@@ -1,10 +1,10 @@
 {% extends 'blogs/base.html' %}
 
 {% block content %}
-    <h1>Here is the confirm page of ID:{{ post.pk }} blog</h1>
+    <!-- <h1>Here is the confirm page of ID:{{ post.pk }} blog</h1> -->
 
     <div class="container clearfix">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center my-5">
             <div class="col-5">
                 <form method="post">
                     {% csrf_token %}

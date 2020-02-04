@@ -2,9 +2,9 @@
 
 {% block content %}
 
-    <h1>Here is Post!!</h1>
+    <!-- <h1>Here is Post!!</h1> -->
 
-    <div class="container">
+    <div class="container my-5">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.non_field_errors }}
