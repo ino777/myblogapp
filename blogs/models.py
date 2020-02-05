@@ -4,6 +4,7 @@ from uuid import uuid4
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.core.validators import URLValidator
 from django.contrib.auth import get_user_model
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
@@ -19,7 +20,7 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
-    text = models.TextField(null=True)
+    text = models.TextField(null=True, max_length=2000)
     image = models.ImageField(upload_to=settings.POST_IMAGE_UPLOAD_DIR, verbose_name='post image')
     image_thumbnail = ImageSpecField(
         source='image', processors=[ResizeToFill(640, 360)], format='JPEG', options={'quality': 60})
